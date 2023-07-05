@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import CloudUploadSVG from "../assets/cloud_upload.svg";
 import { parseFile } from "./parseFile";
-
 import { type FileSpecifier } from "./type";
+import "./FileSelector.css";
 
 interface IFileSelectorProps {
   onFileChange: (file: File) => void;
@@ -38,16 +38,16 @@ export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
       {props.file !== null && (
         <div className="file-selector__display-wrapper">
           <div className="file-selector__file-description">
-            <div>{name}</div>
-            <div>{extension}</div>
+            <div className="ellipsis">{name}</div>
+            <div className="no-flex-shrink">{extension}</div>
             <button
-              className="file-selector__clear-file"
+              className="file-selector__clear-file no-flex-shrink"
               onClick={handleFileClear}
             >
               x
             </button>
             <label
-              className="file-selector__select-button button-like"
+              className="file-selector__select-button button-like no-flex-shrink"
               htmlFor="file-selector"
             >
               choose another file
