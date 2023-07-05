@@ -35,6 +35,7 @@ function App() {
         onFileChange={(file: File) => dispatch({ type: "changeFile", file })}
         onFileClear={() => dispatch({ type: "clearFile" })}
         file={state.file}
+        accept={[".jpg", ".jpeg", ".png"]}
       />
     </>
   );
