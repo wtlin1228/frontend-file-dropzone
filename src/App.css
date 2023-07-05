@@ -41,6 +41,16 @@
   color: #888;
 }
 
+.button-like {
+  border: 1px solid;
+  padding-inline: 6px;
+}
+
+.button-like:hover {
+  background-color: #413737;
+  color: rgb(163, 227, 99);
+}
+
 .file-selector__dropzone {
   position: relative;
 
@@ -58,6 +68,10 @@
   background-color: #413737;
 }
 
+.file-selector__dropzone--hidden {
+  display: none;
+}
+
 .file-selector__icon {
   width: 80px;
 }
@@ -69,7 +83,36 @@
   inset: 0;
 }
 
-.file-selector__button {
+.file-selector__select-button {
   font-weight: bold;
   color: chartreuse;
+  cursor: pointer;
+}
+
+.file-selector__display-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-selector__file-description {
+  display: flex;
+  align-items: center;
+}
+
+.file-selector__clear-file {
+  margin-inline: 10px;
+  border-radius: 100%;
+  border: 1px solid white;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.file-selector__file-error {
+  text-align: left;
+  color: rgb(250, 120, 176);
 }
