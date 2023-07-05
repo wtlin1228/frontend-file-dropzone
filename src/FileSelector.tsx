@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CloudUploadSVG from "./assets/cloud_upload.svg";
 
 const getFileNameAndExtension = (
@@ -35,6 +35,23 @@ export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
 
   const { name, extension, errorMessage } = getFileNameAndExtension(props.file);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleFileClear = () => {
+    props.onFileClear();
+    if (inputRef.current) {
+      // clear input's value so user can select the same file again
+      inputRef.current.value = "";
+    }
+  };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      handleFileClear();
+      return;
+    }
+    props.onFileChange(file);
+  };
+
   return (
     <div className="file-selector">
       {props.file !== null && (
@@ -44,7 +61,7 @@ export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
             <div>{extension}</div>
             <button
               className="file-selector__clear-file"
-              onClick={props.onFileClear}
+              onClick={handleFileClear}
             >
               x
             </button>
@@ -89,20 +106,12 @@ export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
           or, <span className="file-selector__select-button">select one</span>
         </label>
         <input
+          ref={inputRef}
           className="file-selector__input"
           id="file-selector"
           name="file-selector"
           type="file"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-
-            if (!file) {
-              props.onFileClear();
-              return;
-            }
-
-            props.onFileChange(file);
-          }}
+          onChange={handleFileChange}
         />
       </div>
     </div>
