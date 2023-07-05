@@ -1,35 +1,8 @@
 import { useRef, useState } from "react";
-import CloudUploadSVG from "./assets/cloud_upload.svg";
+import CloudUploadSVG from "../assets/cloud_upload.svg";
+import { parseFile } from "./parseFile";
 
-type FileSpecifier = `.${string}`;
-
-const parseFile = (
-  file: null | File,
-  accept: [FileSpecifier, ...FileSpecifier[]]
-): {
-  name: string;
-  extension: string;
-  errorMessage: null | string;
-} => {
-  if (file === null) {
-    return {
-      name: "",
-      extension: "",
-      errorMessage: null,
-    };
-  }
-
-  const lastDotIdx = file.name.lastIndexOf(".");
-  const extension = file.name.slice(lastDotIdx);
-
-  return {
-    name: file.name.slice(0, lastDotIdx),
-    extension,
-    errorMessage: accept.includes(extension as FileSpecifier)
-      ? null
-      : "invalid file",
-  };
-};
+import { type FileSpecifier } from "./type";
 
 interface IFileSelectorProps {
   onFileChange: (file: File) => void;
@@ -40,8 +13,6 @@ interface IFileSelectorProps {
 
 export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
-
-  const { name, extension, errorMessage } = parseFile(props.file, props.accept);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const handleFileClear = () => {
@@ -59,6 +30,8 @@ export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
     }
     props.onFileChange(file);
   };
+
+  const { name, extension, errorMessage } = parseFile(props.file, props.accept);
 
   return (
     <div className="file-selector">
