@@ -26,8 +26,6 @@ const reducer = (_state: State, action: Actions): State => {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log(state);
-
   return (
     <>
       <h1>File Selector</h1>

@@ -5,10 +5,11 @@ import { type FileSpecifier } from "./type";
 import "./FileSelector.css";
 
 interface IFileSelectorProps {
+  file: null | File;
   onFileChange: (file: File) => void;
   onFileClear: () => void;
   accept: [FileSpecifier, ...FileSpecifier[]];
-  file: null | File;
+  errorMessage?: string;
 }
 
 export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
@@ -32,6 +33,7 @@ export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
   };
 
   const { name, extension, errorMessage } = parseFile(props.file, props.accept);
+  const error = props.errorMessage || errorMessage;
 
   return (
     <div className="file-selector">
@@ -53,9 +55,7 @@ export const FileSelector: React.FC<IFileSelectorProps> = (props) => {
               choose another file
             </label>
           </div>
-          {errorMessage && (
-            <div className="file-selector__file-error">{errorMessage}</div>
-          )}
+          {error && <div className="file-selector__file-error">{error}</div>}
         </div>
       )}
 
